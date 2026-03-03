@@ -6,6 +6,13 @@
   <a class="btn btn-success" href="{% url 'notes:create_notes' %}">Criar Nota</a>
 </div>
 
+<div class="mb-3">
+  <form method="get" class="d-flex">
+    {{ search.title }}
+    <button type="submit" class="btn btn-primary ms-2">Pesquisar</button>
+  </form>
+</div>
+
 {% if notes %}
 <div class="row g-3">
   {% for note in notes %}

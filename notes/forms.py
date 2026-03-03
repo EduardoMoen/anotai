@@ -35,3 +35,12 @@ class CreateCategoryForm(forms.ModelForm):
                 'class': 'form-control', 'placeholder': 'Nome',
             }),
         }
+
+
+class SearchTitleNotesForm(forms.Form):
+    title = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control', 'placeholder': 'Procurar por titulo de nota',
+        })
+    )

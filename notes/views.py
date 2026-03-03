@@ -1,14 +1,22 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Note, Category
-from .forms import CreateNotesForm, CreateCategoryForm
+from .forms import CreateNotesForm, CreateCategoryForm, SearchTitleNotesForm
+
 
 @login_required
 def notes_list(request):
     notes = Note.objects.filter(user=request.user)
+    search = SearchTitleNotesForm(request.GET)
+
+    if search.is_valid():
+        title = search.cleaned_data['title']
+        if title:
+            notes = notes.filter(title__icontains=title)
 
     return render(request, 'notes/notes_list.html', {
-        'notes': notes
+        'notes': notes,
+        'search': search
     })
 
 @login_required
