@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow-sm p-4">
+
+      <h1 class="mb-4 text-center text-danger">Excluir Nota</h1>
+
+      <div class="mb-3">
+        <h5>Tem certeza que deseja excluir esta nota?</h5>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">{{ note.title }}</h5>
+          <p class="card-text">{{ note.content }}</p>
+          <p class="text-muted"><small>Categoria: {{ note.category }}</small></p>
+        </div>
+      </div>
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-danger" type="submit">Excluir</button>
+          <a class="btn btn-secondary" href="{% url 'notes:notes_list' %}">Cancelar</a>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

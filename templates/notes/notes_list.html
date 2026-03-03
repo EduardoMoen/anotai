@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1>Minhas Notas</h1>
+  <a class="btn btn-success" href="{% url 'notes:create_notes' %}">Criar Nota</a>
+</div>
+
+{% if notes %}
+<div class="row g-3">
+  {% for note in notes %}
+  <div class="col-md-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">{{ note.title }}</h5>
+        <p class="card-text">{{ note.content|truncatechars:100 }}</p>
+        {% if note.category %}
+        <p class="text-muted mb-0"><small>Categoria: {{ note.category }}</small></p>
+        {% endif %}
+      </div>
+      <div class="card-footer d-flex justify-content-between">
+        <a href="{% url 'notes:update_notes' note.pk %}" class="btn btn-sm btn-warning">Editar</a>
+        <a href="{% url 'notes:delete_notes' note.pk %}" class="btn btn-sm btn-danger">Deletar</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p>Nenhuma nota encontrada. <a href="{% url 'notes:create_notes' %}">Crie sua primeira nota!</a></p>
+{% endif %}
+{% endblock %}

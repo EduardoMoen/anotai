@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow-sm p-4">
+
+      <!-- Título dinâmico -->
+      <h1 class="mb-4 text-center">
+        {% if note.pk %}
+          Editar Nota
+        {% else %}
+          Criar Nota
+        {% endif %}
+      </h1>
+
+      <!-- Formulário -->
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          {{ form.title }}
+        </div>
+
+        <div class="mb-3">
+          {{ form.content }}
+        </div>
+
+        <div class="mb-3">
+          {{ form.category }}
+        </div>
+
+        <button class="btn btn-success w-100" type="submit">
+          {% if note.pk %}
+            Salvar Alterações
+          {% else %}
+            Criar Nota
+          {% endif %}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
