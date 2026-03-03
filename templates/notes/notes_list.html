@@ -6,11 +6,24 @@
   <a class="btn btn-success" href="{% url 'notes:create_notes' %}">Criar Nota</a>
 </div>
 
-<div class="mb-3">
+<!--<div class="mb-3">-->
+<!--  <form method="get" class="d-flex">-->
+<!--    {{ search_form.title }}-->
+<!--    <button type="submit" class="btn btn-primary ms-2">Pesquisar</button>-->
+<!--  </form>-->
+<!--</div>-->
+
+<div class="mb-3 col-md-4">
   <form method="get" class="d-flex">
-    {{ search.title }}
+    {{ search_category.category }}
     <button type="submit" class="btn btn-primary ms-2">Pesquisar</button>
   </form>
+<!--  <script>-->
+<!--  const select = document.querySelector("select");-->
+<!--  select.addEventListener("change", function() {-->
+<!--      this.form.submit();-->
+<!--  });-->
+<!--</script>-->
 </div>
 
 {% if notes %}

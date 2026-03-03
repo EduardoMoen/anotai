@@ -44,3 +44,29 @@ class SearchTitleNotesForm(forms.Form):
             'class': 'form-control', 'placeholder': 'Procurar por titulo de nota',
         })
     )
+
+
+class SearchNameCategoryForm(forms.Form):
+    name = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control', 'placeholder': 'Procurar por nome',
+        })
+    )
+
+
+class SearchCategoryNotesForm(forms.Form):
+    category = forms.ModelChoiceField(
+        queryset=Category.objects.none(),
+        required=False,
+        empty_label="Procurar por categoria",
+        widget=forms.Select(attrs={
+            'class': 'form-control',
+        })
+    )
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
+        super().__init__(*args, **kwargs)
+
+        self.fields['category'].queryset = Category.objects.filter(user=user)

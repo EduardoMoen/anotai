@@ -1,22 +1,30 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Note, Category
-from .forms import CreateNotesForm, CreateCategoryForm, SearchTitleNotesForm
+from .forms import CreateNotesForm, CreateCategoryForm, SearchTitleNotesForm, SearchNameCategoryForm, \
+    SearchCategoryNotesForm
 
 
 @login_required
 def notes_list(request):
     notes = Note.objects.filter(user=request.user)
-    search = SearchTitleNotesForm(request.GET)
+    search_form = SearchTitleNotesForm(request.GET)
+    search_category = SearchCategoryNotesForm(request.GET, user=request.user)
 
-    if search.is_valid():
-        title = search.cleaned_data['title']
+    if search_form.is_valid():
+        title = search_form.cleaned_data['title']
         if title:
             notes = notes.filter(title__icontains=title)
 
+    if search_category.is_valid():
+        category = search_category.cleaned_data['category']
+        if category:
+            notes = notes.filter(category=category)
+
     return render(request, 'notes/notes_list.html', {
         'notes': notes,
-        'search': search
+        'search_form': search_form,
+        'search_category': search_category,
     })
 
 @login_required
@@ -75,9 +83,16 @@ def delete_notes(request, pk):
 @login_required
 def categories_list(request):
     categories = Category.objects.filter(user=request.user)
+    search_form = SearchNameCategoryForm(request.GET)
+
+    if search_form.is_valid():
+        name = search_form.cleaned_data['name']
+        if name:
+            categories = categories.filter(name__icontains=name)
 
     return render(request, 'notes/categories_list.html',{
-        'categories': categories
+        'categories': categories,
+        'search_form': search_form,
     })
 
 @login_required
